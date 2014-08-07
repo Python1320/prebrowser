@@ -65,6 +65,15 @@ function Chooser(tbl,a,b)
 			
 		end)
 
+	dialog:Connect(wx.wxEVT_CHAR_HOOK,
+		function (event)
+			local keyCode = event:GetKeyCode()
+			if keyCode == wx.WXK_ESCAPE then
+				dialog:Destroy()
+			end
+			event:Skip()
+		end)
+		
 	dialog:Connect(wx.wxEVT_CLOSE_WINDOW,
 		function (event)
 			dialog:Destroy()
