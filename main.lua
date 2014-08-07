@@ -1,27 +1,11 @@
 dofile'src/helpers.lua'
 if wrapus(...) then return end
 
-
+dofile'src/config.lua'
 pcall(require,'winapi')
 local url,param1 = ...
 
 
-
-
--- Configuration
-
-	dofile'src/config.lua'
-	
-
--- Constants
-	local BROWSERS = [[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet]]
-	
-	local appnames = {
-		["IEXPLORE.EXE"]="Internet Explorer"
-	}
-	local function getappname(a) return appnames[a] or a end
-
-	
 -- default browser selection :|
 if winapi and (not config.browser or IsKeyDown(VK_SHIFT)) then
 

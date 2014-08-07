@@ -16,3 +16,14 @@ function wrapus(...)
 		return true
 	end
 end
+
+
+-- Constants
+	BROWSERS = [[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet]]
+	
+	local appnames = {
+		["IEXPLORE.EXE"]="Internet Explorer"
+	}
+	function getappname(a) return appnames[a] or a end
+
+	
