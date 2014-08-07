@@ -81,7 +81,7 @@ function Chooser(tbl,a,b)
 	return chosen_id
 end
 
--- alternative keydown
+-- global key IsKeyDown for altcommand
 require 'alien' 
 
 VK_LSHIFT  = 0xA0
@@ -125,8 +125,7 @@ VK_HELP  = 0x2F
 
 local ks = alien.User32.GetKeyState  
 ks:types{  "int", ret = "short", abi = 'stdcall' } 
-local VK_LSHIFT = 0xA0
-print(ks(VK_LSHIFT))
+
 function IsKeyDown(key)
 	local ret = ks(key or VK_SHIFT)
 	return ret <= 127
