@@ -36,7 +36,7 @@ local url,param1 = ...
 
 	
 -- default browser selection :|
-if winapi and not config.browser then
+if winapi and (not config.browser or IsKeyDown(VK_SHIFT)) then
 
 
 	local browsernames = {}
