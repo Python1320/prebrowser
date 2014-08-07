@@ -33,7 +33,7 @@ local url,param1 = ...
 		["IEXPLORE.EXE"]="Internet Explorer"
 	}
 	local function getappname(a) return appnames[a] or a end
-	
+
 	
 -- default browser selection :|
 if winapi and not config.browser then
