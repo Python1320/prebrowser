@@ -1,22 +1,9 @@
-LOADER_COUNTER=LOADER_COUNTER and LOADER_COUNTER+1 or 0
+dofile'ui.lua'
 
-local p=print require 'wx' print=p
-
-
-local function MsgBox(msg,asd,title)
-	return wx.wxMessageBox(msg,title or "prebrowser",
-					asd or (wx.wxOK + wx.wxICON_INFORMATION),
-					wx.NULL)
-end
-
-local function YesNo(title,msg)
-	return MsgBox(msg,wx.wxYES_NO + wx.wxICON_QUESTION,title) == wx.wxYES
-end
-
+-- wrap us in pcall for popup error
+LOADER_COUNTER=LOADER_COUNTER and LOADER_COUNTER+1 or 0 
 if LOADER_COUNTER==0 then
-	
-	
-	print"wrapping ourselves"
+	--print"wrapping ourselves"
 	local args={...}
 	local func = debug.getinfo(1, "f").func
 	local ok,err = xpcall(function() func(unpack(args)) end,function(errstr)
@@ -29,61 +16,78 @@ if LOADER_COUNTER==0 then
 end
 
 pcall(require,'winapi')
-
-require'serialize'
-
-local config = loadfile("config.lua")
-config = config and config() or {}
-for k,v in next,config do
-	print(">",k,v)
-end
-
+require 'serialize'
 local url,param1 = ...
 
-local str = debug.getinfo(1, "S").source:sub(2)
-local mypath = str:match("(.*/)")
-print(mypath)
 
 
-if winapi and not config.browser then
-	
+
+-- Configuration
+
+	local mypath = debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "."
+	local CFG= mypath ..'/'.. "config.lua"
+
+	local config = loadfile (CFG)
+	config = config and config() or {}
+	--for k,v in next,config do print("> ",k,"=",v) end
+
+-- Constants
 	local BROWSERS = [[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet]]
+	
+	local appnames = {
+		["IEXPLORE.EXE"]="Internet Explorer"
+	}
+	local function getappname(a) return appnames[a] or a end
+	
+	
+-- default browser selection :|
+if winapi and not config.browser then
 
-	local key,err = winapi.open_reg_key (BROWSERS)
 
-
-
-	local t = key:get_keys()
-
-
-		for _,k in next,t do
-			local key,err = winapi.open_reg_key (BROWSERS..'\\'..k..'\\Capabilities')
-			local desc = key and key:get_value("ApplicationName") or k
-			if key then
-				key:close()
-			end
-			local use = YesNo("Use browser?",desc)
-			
-			if use then 
-				local key,err = winapi.open_reg_key (BROWSERS..'\\'..k..'\\shell\\open\\command')
-				if key then
-					config.browser = key:get_value()
-					break 
-				else
-					error("notfound "..tostring(err))
-				end
-			end
-			
+	local browsernames = {}
+	local browser_paths = {}
+	
+	--- Do you want to use this browser?
+	local function checkbrowser(k)
+		local key,err = winapi.open_reg_key (BROWSERS..'\\'..k..'\\Capabilities')
+		local desc = key and key:get_value("ApplicationName") or k
+		
+		if key then key:close() else 
+			desc = getappname(k)
+			--print("noappname",k,"->",desc) 
 		end
 		
 		
+		local key,err = winapi.open_reg_key (BROWSERS..'\\'..k..'\\shell\\open\\command')
+		local path = key and key:get_value()
+		if key then key:close() else print("nopath1",k) return end
+		if not path then print("nopath",k) return end
+		
+		table.insert(browsernames,desc or "???")
+		table.insert(browser_paths,path or "???")
+	end
+
+
+	local key,err = winapi.open_reg_key (BROWSERS)
+
+	local t = key:get_keys()
+	
+	for _,k in next,t do
+		if k~="PreBrowser" then
+			checkbrowser(k)
+		end
+	end
+	
 	key:close()
 	
+	local chosen = Chooser(browsernames,"Choose","Browser")
 	
-	if not config.browser then
-		MsgBox "No more browsers"
-		return
-	end
+	if not chosen then return end
+	local path = browser_paths[chosen]
+	print(chosen,path)
+	
+	config.browser = path or error"???"
+	
 	
 end
 
@@ -92,12 +96,9 @@ if not config.browser then
 	return
 end
 
+assert(winapi.shell_exec(nil, 	config.browser,
+								'"'..url:gsub('"','')..'"',
+								nil,winapi.SW_MINIMIZE))
 
-url=url:gsub('"','')
-print("exec",winapi.shell_exec(nil,config.browser,'"'..url..'"',nil,winapi.SW_MINIMIZE))
-
-print("Using",config.browser)
-
-local f=io.open("config.lua",'wb')
-f:write(serialize(config))
-f:close()
+-- save config
+local f=io.open(CFG,'wb') f:write(serialize(config)) f:close()
