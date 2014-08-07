@@ -1,9 +1,14 @@
 prebrowser
 ==========
 
-PreBrowser modifies urls before sending them to the browser (to disable link filtering on steam and maybe download images before viewing them)
+PreBrowser modifies urls before sending them to the browser.
 
-Status: Alpha unfinished
+Goals:
+ - Disable linkfilter in steam
+ - download image and show in actual image viewer AFTER finishing downloading
+ - Choose browser to open in / private browsing mode
+
+Status: Unfinished, coding...
 
 Uses
  - luadist
