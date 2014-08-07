@@ -1,19 +1,6 @@
-dofile'src/ui.lua'
+dofile'src/helpers.lua'
+if wrapus(...) then return end
 
--- wrap us in pcall for popup error
-LOADER_COUNTER=LOADER_COUNTER and LOADER_COUNTER+1 or 0 
-if LOADER_COUNTER==0 then
-	--print"wrapping ourselves"
-	local args={...}
-	local func = debug.getinfo(1, "f").func
-	local ok,err = xpcall(function() func(unpack(args)) end,function(errstr)
-		
-		local err = debug.traceback(errstr,2)
-		MsgBox(err, wx.wxOK + wx.wxICON_ERROR,"prebrowser crashed :(")
-		
-	end)
-	return
-end
 
 pcall(require,'winapi')
 local url,param1 = ...
