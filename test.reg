@@ -1,0 +1,47 @@
+Windows Registry Editor Version 5.00
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah]
+@="Looah"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\Capabilities]
+"ApplicationName"="Looah"
+"ApplicationIcon"="X:\\a\\lua\\lua.exe,0"
+"ApplicationDescription"="Looah manually added via registry."
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\Capabilities\FileAssociations]
+".xhtml"="LooahHTML"
+".xht"="LooahHTML"
+".shtml"="LooahHTML"
+".html"="LooahHTML"
+".htm"="LooahHTML"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\Capabilities\StartMenu]
+"StartMenuInternet"="Looah"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\Capabilities\URLAssociations]
+"https"="LooahHTML"
+"http"="LooahHTML"
+"ftp"="LooahHTML"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\DefaultIcon]
+@="X:\\a\\lua\\lua.exe,0"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\shell]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\shell\open]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\Looah\shell\open\command]
+@="\"X:\\a\\lua\\lua.exe\" x:\\s\\looah.lua open"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications]
+"Looah"="Software\\Clients\\StartMenuInternet\\Looah\\Capabilities"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LooahHTML]
+"URL Protocol"=""
+@="Looah HTML Document"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LooahHTML\DefaultIcon]
+@="X:\\a\\lua\\lua.exe,0"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LooahHTML\shell]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LooahHTML\shell\open]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\LooahHTML\shell\open\command]
+@="\"X:\\a\\lua\\lua.exe\" x:\\s\\looah.lua \"%1\""
