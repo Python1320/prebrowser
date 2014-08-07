@@ -1,0 +1,42 @@
+Windows Registry Editor Version 5.00
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser]
+@="PreBrowser"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\Capabilities]
+"ApplicationName"="PreBrowser"
+"ApplicationIcon"="%SystemRoot%\\system32\\SHELL32.dll,12"
+"ApplicationDescription"="PreBrowser modifies links before they are sent to browser"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\Capabilities\FileAssociations]
+
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\Capabilities\StartMenu]
+"StartMenuInternet"="PreBrowser"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\Capabilities\URLAssociations]
+"https"="PreBrowserURL"
+"http"="PreBrowserURL"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\DefaultIcon]
+@="%SystemRoot%\\system32\\SHELL32.dll,12"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\shell]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\shell\open]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\PreBrowser\shell\open\command]
+@="wlua \"%PREBROWSER%\\main.lua\""
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications]
+"PreBrowser"="Software\\Clients\\StartMenuInternet\\PreBrowser\\Capabilities"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PreBrowserURL]
+"URL Protocol"=""
+@="PreBrowser HTML Document"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PreBrowserURL\DefaultIcon]
+@="%SystemRoot%\\system32\\SHELL32.dll,12"
+ 
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PreBrowserURL\shell]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PreBrowserURL\shell\open]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\PreBrowserURL\shell\open\command]
+@="wlua \"%PREBROWSER%\\main.lua\" \"%1\""
