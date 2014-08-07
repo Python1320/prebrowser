@@ -80,3 +80,54 @@ function Chooser(tbl,a,b)
 	
 	return chosen_id
 end
+
+-- alternative keydown
+require 'alien' 
+
+VK_LSHIFT  = 0xA0
+VK_RSHIFT  = 0xA1
+VK_LCONTROL  = 0xA2
+VK_RCONTROL  = 0xA3
+VK_LMENU  = 0xA4
+VK_RMENU  = 0xA5
+VK_PLAY  = 0xFA
+VK_ZOOM  = 0xFB
+VK_LBUTTON  = 0x01
+VK_RBUTTON  = 0x02
+VK_CANCEL  = 0x03
+VK_MBUTTON  = 0x04
+VK_BACK  = 0x08
+VK_TAB  = 0x09
+VK_CLEAR  = 0x0C
+VK_RETURN  = 0x0D
+VK_SHIFT  = 0x10
+VK_CONTROL  = 0x11
+VK_MENU  = 0x12
+VK_PAUSE  = 0x13
+VK_CAPITAL  = 0x14
+VK_ESCAPE  = 0x1B
+VK_SPACE  = 0x20
+VK_PRIOR  = 0x21
+VK_NEXT  = 0x22
+VK_END  = 0x23
+VK_HOME  = 0x24
+VK_LEFT  = 0x25
+VK_UP  = 0x26
+VK_RIGHT  = 0x27
+VK_DOWN  = 0x28
+VK_SELECT  = 0x29
+VK_PRINT  = 0x2A
+VK_EXECUTE  = 0x2B
+VK_SNAPSHOT  = 0x2C
+VK_INSERT  = 0x2D
+VK_DELETE  = 0x2E
+VK_HELP  = 0x2F
+
+local ks = alien.User32.GetKeyState  
+ks:types{  "int", ret = "short", abi = 'stdcall' } 
+local VK_LSHIFT = 0xA0
+print(ks(VK_LSHIFT))
+function IsKeyDown(key)
+	local ret = ks(key or VK_SHIFT)
+	return ret <= 127
+end

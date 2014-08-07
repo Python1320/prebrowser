@@ -1,4 +1,4 @@
-dofile'ui.lua'
+dofile'src/ui.lua'
 
 -- wrap us in pcall for popup error
 LOADER_COUNTER=LOADER_COUNTER and LOADER_COUNTER+1 or 0 
@@ -16,7 +16,6 @@ if LOADER_COUNTER==0 then
 end
 
 pcall(require,'winapi')
-require 'serialize'
 local url,param1 = ...
 
 
@@ -24,12 +23,8 @@ local url,param1 = ...
 
 -- Configuration
 
-	local mypath = debug.getinfo(1, "S").source:sub(2):match("(.*/)") or "."
-	local CFG= mypath ..'/'.. "config.lua"
-
-	local config = loadfile (CFG)
-	config = config and config() or {}
-	--for k,v in next,config do print("> ",k,"=",v) end
+	dofile'src/config.lua'
+	
 
 -- Constants
 	local BROWSERS = [[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet]]
@@ -100,5 +95,4 @@ assert(winapi.shell_exec(nil, 	config.browser,
 								'"'..url:gsub('"','')..'"',
 								nil,winapi.SW_MINIMIZE))
 
--- save config
-local f=io.open(CFG,'wb') f:write(serialize(config)) f:close()
+saveconfig()
